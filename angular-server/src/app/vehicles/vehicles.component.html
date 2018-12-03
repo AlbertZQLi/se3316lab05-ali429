@@ -1,0 +1,33 @@
+<!--<div [innerHTML]="vehicleList"></div>-->
+<style>
+.desc{
+  overflow: hidden;
+  position: fixed;
+  left:450px;
+  width:30%;
+  background-color: beige;
+  display:none;
+
+}
+</style>
+ <div style="float: left; width: 30%">
+<ul>
+    <li *ngFor = "let vehicle of vehicleList; let i = index">
+    {{vehicle.name}}
+    <img id = {{i}} src = {{vehicle.image}} height = "100" (click) = "addDescription($event)"/>
+    </li>
+</ul>
+<button (click) = 'addDescription(1)'>get data</button>
+</div>
+ <div class = "desc" id = "desc">
+     <button (click) = closeDesc($event)>close</button>
+     <p style="font-size:200%">{{vehicleName}}</p>
+     <p style="font-size:200%">{{vehiclePrice}}</p>
+     <p style="font-size:200%">{{vehicleTax}}</p>
+     <p style="font-size:200%">{{vehicleHP}}</p>
+     <p style="font-size:200%">{{vehicleSeats}}</p>
+     <p style="font-size:200%">{{vehicleTopSpeed}}</p>
+ </div>
+ <div class = "cart">
+     
+ </div>
