@@ -14,7 +14,9 @@
 <ul>
     <li *ngFor = "let vehicle of vehicleList; let i = index">
     {{vehicle.name}}
+    <p>{{"Stock: "+vehicle.quantity}}</p>
     <img id = {{i}} src = {{vehicle.image}} height = "100" (click) = "addDescription($event)"/>
+    <button id = {{i}} (click) = "addItem($event)">Add to Cart</button>
     </li>
 </ul>
 <button (click) = 'addDescription(1)'>get data</button>
@@ -28,6 +30,4 @@
      <p style="font-size:200%">{{vehicleSeats}}</p>
      <p style="font-size:200%">{{vehicleTopSpeed}}</p>
  </div>
- <div class = "cart">
      
- </div>

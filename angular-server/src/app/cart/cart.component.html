@@ -1,0 +1,34 @@
+<!--<div [innerHTML]="vehicleList"></div>-->
+<style>
+.fixed{
+  overflow: hidden;
+  position: fixed;
+  left:906px;
+  width:30%;
+  background-color: BlanchedAlmond;
+  display:block;
+
+}
+</style>
+ <div style="float: left; width: 30%" class = "fixed">
+Shopping Cart
+        <ul style = " padding: 0; list-style-type: none@">
+        <li *ngFor = "let item of cartItems; let i = index">
+            <div style = "height :100px">
+            <div style = "float:left">
+                {{item.name}}
+            <p>
+                {{"$"+item.price}}
+            </p>
+            </div>
+            <div style = "float:right">
+                <img id = {{i}} src = {{item.image}} height = "60" />
+            </div>
+            <div id = {{item.name}}>
+                1
+            </div>
+            </div>
+        </li>
+        </ul>
+    
+ </div>

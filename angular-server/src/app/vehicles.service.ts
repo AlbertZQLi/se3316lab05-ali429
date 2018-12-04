@@ -13,7 +13,7 @@ export class VehiclesService {
     
 
       this.http.get(url).subscribe(data => {
-          console.log(data);
+          
           for(var i = 0; i < data.length; i++){
             if(data[i].name != undefined){
             this.vehicleNames.push(data[i])
@@ -23,4 +23,22 @@ export class VehiclesService {
           callback(this.vehicleNames)
       });
   }
+  getVehicle(callback, index){
+    callback(this.vehicleNames[index]);
+  }
+  
+  changeQuantity(amount, id){
+       var url= 'https://se3316-lab5-ali429-ali429.c9users.io:8081/api/vehicles'+id
+       this.http.put(url,{
+         quantity:amount
+       }).subscribe(
+         res=> {
+           console.log(res);
+         },
+         err=>{
+           console.log("Error occured");
+         })
+  }
+    
+  
 }

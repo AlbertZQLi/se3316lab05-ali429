@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {VehiclesService} from '../vehicles.service'
 import { DOCUMENT } from '@angular/common'; 
+import {CartService} from '../cart.service'
 
 @Component({
   selector: 'app-vehicles',
@@ -24,10 +25,12 @@ export class VehiclesComponent implements OnInit {
   vehicleImages = [];
   vehicleFunctions = [];
   
+
+  
   
   
 
-  constructor(private vehiclesService : VehiclesService) { }
+  constructor(private vehiclesService : VehiclesService, private cartService : CartService) { }
   
   reload(){
     location.reload();
@@ -37,10 +40,7 @@ export class VehiclesComponent implements OnInit {
     this.vehiclesService.getList(this.createList.bind(this));
   }
 
-  createList(res: string[]){
-    console.log("here")
-          
-      console.log(res)
+  createList(res){
     var i;  
     for(i = 0; i < res.length; i++){
 /*      this.vehicleList = this.vehicleList + "<div><p> Vehicle: "+res[i].name+", Price: $"+res[i].price.toString()+"</p>"+
@@ -72,6 +72,23 @@ export class VehiclesComponent implements OnInit {
    var x =  document.getElementById("desc");
         x.style.display = "none";
     
+  }
+  
+  addItem(event){
+
+    var vehicle = this.vehicleList[event.currentTarget.id];
+    var i = vehicle.name
+    console.log(vehicle)
+    if(document.getElementById(i) == null)
+    this.cartService.cartAdd(vehicle)
+    else if  (document.getElementById(i).innerHTML == vehicle.quantity)
+    alert ("error")
+    else
+    {
+      console.log(document.getElementById(i))
+      document.getElementById(i).innerHTML = parseInt(document.getElementById(i).innerHTML) + 1 
+    }
+
   }
   
 }

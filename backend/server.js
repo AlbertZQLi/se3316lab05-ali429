@@ -94,6 +94,7 @@ router.route('/vehicles/:vehicle_id')
             res.json({ message: 'Successfully deleted' });
         });
     })
+    
     .put(function(req, res) {
 
         // use our vehicle model to find the vehicle we want
@@ -130,6 +131,20 @@ router.route('/vehicles/:vehicle_id')
 
         });
     });
+/*router.route('/update')
+.put(function(req,res){
+    Vehicle.update({
+            _id: req.body._id
+        },
+        {
+            "quantity":req.body.quantity
+        }), function(err, vehicle) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully updated' });
+        }
+})*/
 
 app.use('/api', router);
 
