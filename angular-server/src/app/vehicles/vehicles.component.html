@@ -3,20 +3,64 @@
 .desc{
   overflow: hidden;
   position: fixed;
-  left:450px;
+  left:33%;
   width:30%;
   background-color: beige;
   display:none;
 
 }
+.comments{
+  overflow: hidden;
+  left:33%;
+  position:absolute;
+  width:30%;
+  background-color: beige;
+  display:none;
+}
+.list{
+      border: 2px solid sienna;
+  border-radius: 5px;
+}
+.tab{
+  overflow: hidden;
+  left:10%;
+  top:3%;
+  position:fixed;
+  width:10%;
+  background-color: beige;
+  display:block;
+}
+.menu{
+    display:none;
+}
 </style>
+<div class = "tab" id = "tab">
+    <button (click) = "showManager()" id = "menuButton">Manager</button>
+    <div class = "menu" id = "menu">
+    Item id: <input type = "text" id = "idInput">
+    Item Name: <input type = "text" id = "nameInput">
+    Item Price: <input type = "number" id = "priceInput">
+    Item Quantity: <input type = "number" id = "quantityInput">
+    Item Tax: <input type = "number" id = "taxInput">
+    Item Horse Power: <input type = "number" id = "horsePowerInput">
+    Item Seats: <input type = "number" id = "seatsInput">
+    Item Top Speed: <input type = "number" id = "topSpeedInput">
+    Item Image: <input type = "text" id = "imageInput">
+    <button (click) = "updateItem()">Update Item By Id</button>
+    <button (click) = "deleteItem()">Delete Item By Id</button>
+    <button (click) = "createItem()">Create Item</button>
+    <button (click) = "closeManager()">Close</button>
+    </div>
+</div>
  <div style="float: left; width: 30%">
 <ul>
-    <li *ngFor = "let vehicle of vehicleList; let i = index">
+    <li *ngFor = "let vehicle of vehicleList; let i = index" class = list>
     {{vehicle.name}}
-    <p>{{"Stock: "+vehicle.quantity}}</p>
+    <p id = "{{vehicle.name+'quantity'}}">{{"Stock: "+vehicle.quantity}}</p>
     <img id = {{i}} src = {{vehicle.image}} height = "100" (click) = "addDescription($event)"/>
     <button id = {{i}} (click) = "addItem($event)">Add to Cart</button>
+    <button id = {{vehicle.name}} (click) = "findVehicleComments($event)">Display Comments</button>
+    <button id = {{i}} (click) = "addComment($event)">Add Comments</button>
     </li>
 </ul>
 <button (click) = 'addDescription(1)'>get data</button>
@@ -29,5 +73,23 @@
      <p style="font-size:200%">{{vehicleHP}}</p>
      <p style="font-size:200%">{{vehicleSeats}}</p>
      <p style="font-size:200%">{{vehicleTopSpeed}}</p>
+     <p style="font-size:200%">{{vehicleID}}</p>
  </div>
-     
+<div class = "comments" id = "comments">
+     <button (click) = closeComments($event)>close</button>
+    <ul>
+        <li *ngFor = "let comment of cByVehicles; let i = index" class = list>
+        {{comment.item+" comments"}}
+        <p>{{comment.comment}}</p>
+        <p>{{"By: "+comment.user}}</p>
+        <p>{{comment.rating+"/5"}}</p>
+        </li>
+    </ul>
+ </div>
+<div class = "desc" id = "commentForm" >
+    <p>{{"Add comment for "+cvn}}</p>
+    Comment: <input type = "text" id = "commentInput">
+    Rating: <input type = "number" id = "ratingInput">
+     <button (click) = "closeCommentForm()">Cancel</button>
+     <button (click) = "submitComment()">Submit</button>
+</div>

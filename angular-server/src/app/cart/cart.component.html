@@ -3,7 +3,7 @@
 .fixed{
   overflow: hidden;
   position: fixed;
-  left:906px;
+  left:67%;
   width:30%;
   background-color: BlanchedAlmond;
   display:block;
@@ -24,11 +24,16 @@ Shopping Cart
             <div style = "float:right">
                 <img id = {{i}} src = {{item.image}} height = "60" />
             </div>
-            <div id = {{item.name}}>
+            <div id = "{{item.name+'cartQ'}}" class = {{item.name}}>
                 1
             </div>
+            <button id = {{item.name}} (click) = removeItem($event) class = {{item.name}}> remove item </button>
             </div>
         </li>
         </ul>
-    
+    Subtotal w/o tax: $
+    <p id = withoutTax>0</p>
+    Subtotal w/o tax: $
+    <p id = withTax>0</p>
+    <button (click) = clearCart()>Clear</button>
  </div>

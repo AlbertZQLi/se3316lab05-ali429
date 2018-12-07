@@ -15,6 +15,7 @@ var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/vehicles');
 
 var Vehicle     = require('./models/vehicles');
+var Comment     = require('./models/comments');
 
 var cors = require('cors')
 
@@ -103,21 +104,21 @@ router.route('/vehicles/:vehicle_id')
             if (err)
                 res.send(err);
                 
-                if(req.body.name != null)
+                if(req.body.name != null && req.body.name != "")
                 vehicle.name = req.body.name;
-                if(req.body.price != null)
+                if(req.body.price != null && req.body.price != "")
                 vehicle.price = req.body.price;
-                if(req.body.quantity != null)
+                if(req.body.quantity != null && req.body.quantity != "")
                 vehicle.quantity = req.body.quantity;
-                if(req.body.tax != null)
+                if(req.body.tax != null && req.body.tax != "")
                 vehicle.tax = req.body.tax;
-                if(req.body.horsePower != null)
+                if(req.body.horsePower != null && req.body.horsePower != "")
                 vehicle.horsePower = req.body.horsePower;
-                if(req.body.seats != null)
+                if(req.body.seats != null && req.body.seats != "")
                 vehicle.seats = req.body.seats;
-                if(req.body.topSpeed != null)
+                if(req.body.topSpeed != null && req.body.topSpeed != "")
                 vehicle.topSpeed = req.body.topSpeed;
-                if(req.body.image != null)
+                if(req.body.image != null && req.body.image != "")
                 vehicle.image = req.body.image;
                 // update the vehicles info
 
@@ -127,6 +128,7 @@ router.route('/vehicles/:vehicle_id')
                     res.send(err);
 
                 res.json({ message: 'vehicle updated!' });
+                return;
             });
 
         });
@@ -145,6 +147,68 @@ router.route('/vehicles/:vehicle_id')
             res.json({ message: 'Successfully updated' });
         }
 })*/
+router.route('/comments')
+        .get(function(req, res) {
+        Comment.find(function(err, comments) {
+            if (err)
+                res.send(err);
+
+            res.json(comments);
+        });
+    })  
+    .post(function(req, res) {
+
+        var comment = new Comment();      // create a new instance of the vehicle model
+        comment.item = req.body.item;
+        comment.comment = req.body.comment;
+        comment.rating = req.body.rating;
+        comment.user = req.body.user;
+        comment.hidden = false;
+     
+        // set the vehicles name (comes from the request)
+
+        // save the vehicle and check for errors
+        comment.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Comment created!' });
+        });
+
+    });
+router.route('/comments/:comment_id')    
+
+.put(function(req, res) {
+
+        // use our vehicle model to find the vehicle we want
+        Comment.findById(req.params.comment_id, function(err, comment) {
+
+            if (err)
+                res.send(err);
+                
+                if(req.body.item != null)
+                comment.item = req.body.item;
+                if(req.body.user != null)
+                comment.user = req.body.user;
+                if(req.body.rating != null)
+                comment.rating = req.body.rating;
+                if(req.body.comment != null)
+                comment.comment = req.body.comment;
+                if(req.body.hidden != null)
+                comment.hidden = req.body.hidden;
+                // update the vehicles info
+
+            // save the vehicle
+            comment.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'Comment updated!' });
+                return;
+            });
+
+        });
+    });
 
 app.use('/api', router);
 
